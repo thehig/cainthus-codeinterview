@@ -13,8 +13,7 @@ export function sampleAction() {
 export function reducer(state, action) {
   switch (action.type) {
     case SAMPLE_ACTION:
-      const counter = state.counter + 1;
-      return {...state, counter};
+      return state.set('counter', state.get('counter') + 1);
     default:
       return state;
   }

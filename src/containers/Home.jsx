@@ -36,7 +36,7 @@ class Home extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    counter: state.data.counter
+    counter: state.data.get('counter')
   };
 }
 
