@@ -18,6 +18,7 @@ class FlickrSearch extends PureComponent {
         results,
     } = this.props;
 
+
     const hasError = !!error;
     const errorMsg = hasError ? error.get('error') : "";
 
@@ -33,7 +34,23 @@ class FlickrSearch extends PureComponent {
                 </div>
             }
 
-            { results && results }
+            { results && 
+                <div>
+                    Results:
+                    <ul>
+                        <li>Page: {results.get('page')}</li>
+                        <li>Pages: {results.get('pages')}</li>
+                        <li>Per Page: {results.get('perpage')}</li>
+                        <li>Total: {results.get('total')}</li>
+                    </ul>
+
+                    <ul>
+                        { results.get('photos').map( 
+                            (p, index) => <img src={p.get('url')} key={index} alt={p.get('title')} />
+                        ) }
+                    </ul>
+                </div>
+            }
         </div>
     );
   };

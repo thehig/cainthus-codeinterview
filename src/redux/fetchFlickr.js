@@ -17,10 +17,6 @@ export function fetchFlickr(searchTags, fromIndex = 0) {
     [CALL_API]: {
       endpoint: endpointUrl + searchTags,
       method: 'GET',
-      // headers: {
-      //   'Content-Type': 'application/json',
-      //   Accept: 'application/json',
-      // },
       types: [
         {
           type: FETCH_FLICKR_BEGIN,
@@ -56,13 +52,25 @@ export function dismissFetchFlickrError() {
 
 function parsePhotos (flickrApiResponse) {
   const { page, pages, perpage, total, photo } = flickrApiResponse.photos;
-  return {
-    page, 
-    pages, 
-    perpage, 
+
+  const photos = photo.map(function(p){
+    return {
+      url: `https://farm${p.farm}.staticflickr.com/${p.server}/${p.id}_${p.secret}.jpg`,
+      title: p.title,
+      owner: p.owner,
+    };
+  });
+
+  const results = {
+    page,
+    pages,
+    perpage,
     total,
-    photos: photo.map( p => `https://farm${p.farm}.staticflickr.com/${p.server}/${p.id}_${p.secret}.jpg` ),
-  }
+    photos,
+  };
+
+  // console.log("parsePhotos results", results);
+  return results;
 }
 
 export function reducer(state, action) {
@@ -77,7 +85,7 @@ export function reducer(state, action) {
       return state
         .set('fetchFlickrPending', false)
         .set('fetchFlickrError', null)
-        .set('flickrResults', Immutable.fromJS(parsePhotos(action.payload)));
+        .set('fetchFlickrResults', Immutable.fromJS(parsePhotos(action.payload)));
     }
     case FETCH_FLICKR_FAILURE: {
       const failResponse = getError(action);
