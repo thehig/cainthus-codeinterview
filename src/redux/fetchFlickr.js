@@ -55,9 +55,9 @@ export function dismissFetchFlickrError() {
 export function reducer(state, action) {
   switch (action.type) {
     case FETCH_FLICKR_BEGIN: {
-      const beginResponse = action.error ? { error: `${action.payload.message}` } : (action.payload || {});       // If error is true, then payload is a RequestError
+      const beginResponse = action.error ? getError(action) : (action.payload || {});       // If error is true, then payload is a RequestError
       return state
-          .set('fetchFlickrError', action.error ? beginResponse : null)
+          .set('fetchFlickrError', action.error ? getError(beginResponse) : null)
           .set('fetchFlickrPending', !action.error);          // Set pending to inverse of error
     }
     case FETCH_FLICKR_SUCCESS: {
@@ -73,7 +73,7 @@ export function reducer(state, action) {
         .set('fetchFlickrError', failResponse);
     }
     case FETCH_FLICKR_DISMISS_ERROR:
-      return state.set('fetchFlickrError', false);
+      return state.set('fetchFlickrError', null);
     default:
       return state;
   }

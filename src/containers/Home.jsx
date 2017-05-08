@@ -30,7 +30,7 @@ class Home extends Component {
   };
 
   dismissFetchFlickError(){
-    return this.props.actions.dismissFetchFlickError();
+    return this.props.actions.dismissFetchFlickrError();
   };
 
   render() {
