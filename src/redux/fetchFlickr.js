@@ -9,17 +9,18 @@ import {
   FETCH_FLICKR_DISMISS_ERROR,
 } from './common/constants';
 
-const url = "";
+import flickr from './common/flickr';
+const endpointUrl = `${flickr.endpoint}/?method=flickr.photos.search&api_key=${flickr.apiKey}&${flickr.alwaysParameters}&tags=`;
 
 export function fetchFlickr(searchTags, fromIndex = 0) {
   return {
     [CALL_API]: {
-      endpoint: url,
+      endpoint: endpointUrl + searchTags,
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
+      // headers: {
+      //   'Content-Type': 'application/json',
+      //   Accept: 'application/json',
+      // },
       types: [
         {
           type: FETCH_FLICKR_BEGIN,
@@ -53,6 +54,17 @@ export function dismissFetchFlickrError() {
   };
 }
 
+function parsePhotos (flickrApiResponse) {
+  const { page, pages, perpage, total, photo } = flickrApiResponse.photos;
+  return {
+    page, 
+    pages, 
+    perpage, 
+    total,
+    photos: photo.map( p => `https://farm${p.farm}.staticflickr.com/${p.server}/${p.id}_${p.secret}.jpg` ),
+  }
+}
+
 export function reducer(state, action) {
   switch (action.type) {
     case FETCH_FLICKR_BEGIN: {
@@ -65,7 +77,7 @@ export function reducer(state, action) {
       return state
         .set('fetchFlickrPending', false)
         .set('fetchFlickrError', null)
-        .set('flickrResults', Immutable.fromJS(action.payload));
+        .set('flickrResults', Immutable.fromJS(parsePhotos(action.payload)));
     }
     case FETCH_FLICKR_FAILURE: {
       const failResponse = getError(action);
