@@ -1,7 +1,8 @@
 import { sampleAction } from '../sampleAction';
-import { fetchFlickr } from '../fetchFlickr';
+import { fetchFlickr, dismissFetchFlickrError } from '../fetchFlickr';
 
 export {
   sampleAction,
-  fetchFlickr
+  fetchFlickr,
+  dismissFetchFlickrError,
 };
