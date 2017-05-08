@@ -5,7 +5,9 @@ const initialState = Immutable.Map({
 
   fetchFlickrError: null,
   fetchFlickrPending: false,
-  fetchFlickrResults: null
+  fetchFlickrResults: null,
+  fetchFlickrTags: "",
+  fetchFlickerFromIndex: 0,
 });
 
 export default initialState;

@@ -18,6 +18,7 @@ class Home extends Component {
 
     this.clickButton = this.clickButton.bind(this);
     this.fetchFlickr = this.fetchFlickr.bind(this);
+    this.fetchMoreFlickr = this.fetchMoreFlickr.bind(this);
     this.dismissFetchFlickError = this.dismissFetchFlickError.bind(this);
   };
 
@@ -26,8 +27,16 @@ class Home extends Component {
   };
 
   fetchFlickr(){
-    return this.props.actions.fetchFlickr();
+    return this.props.actions.fetchFlickr("Bananas");
   };
+
+  fetchMoreFlickr(){    
+    const tags = this.props.data.get('fetchFlickrTags');
+    const fromIndex = this.props.data.get('fetchFlickerFromIndex');
+
+    // console.log("Fetching", tags, fromIndex);
+    return this.props.actions.fetchFlickr(tags, fromIndex + 1);
+  }
 
   dismissFetchFlickError(){
     return this.props.actions.dismissFetchFlickrError();
@@ -49,6 +58,7 @@ class Home extends Component {
           pending={fetchFlickrPending}
           results={fetchFlickrResults}
           fetchAction={this.fetchFlickr}
+          fetchMoreAction={this.fetchMoreFlickr}
           dismissAction={this.dismissFetchFlickError}
         />
       </div>
