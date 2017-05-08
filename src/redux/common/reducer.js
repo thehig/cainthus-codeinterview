@@ -1,8 +1,10 @@
 import initialState from './initialState';
 import { reducer as sampleAction } from '../sampleAction';
+import { reducer as fetchFlickr } from '../fetchFlickr';
 
 const reducers = [
-  sampleAction
+  sampleAction,
+  fetchFlickr
 ];
 
 export default function reducer(state = initialState, action) {
