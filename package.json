@@ -11,10 +11,10 @@
     "url": "https://github.com/thehig/cainthus-codeinterview/issues"
   },
   "homepage": "https://github.com/thehig/cainthus-codeinterview#readme",
-
   "dependencies": {
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-router-dom": "next"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
