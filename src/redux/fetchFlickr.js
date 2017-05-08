@@ -12,10 +12,10 @@ import {
 import flickr from './common/flickr';
 const endpointUrl = `${flickr.endpoint}/?method=flickr.photos.search&api_key=${flickr.apiKey}&${flickr.alwaysParameters}&tags=`;
 
-export function fetchFlickr(searchTags, fromIndex = 0) {
+export function fetchFlickr(searchTags, fromIndex = 1) {
   return {
     [CALL_API]: {
-      endpoint: endpointUrl + searchTags,
+      endpoint: endpointUrl + searchTags + "&page=" + fromIndex,
       method: 'GET',
       types: [
         {
@@ -78,6 +78,8 @@ export function reducer(state, action) {
     case FETCH_FLICKR_BEGIN: {
       const beginResponse = action.error ? getError(action) : (action.payload || {});       // If error is true, then payload is a RequestError
       return state
+          .set('fetchFlickrTags', action.meta.searchTags)
+          .set('fetchFlickerFromIndex', action.meta.fromIndex)
           .set('fetchFlickrError', action.error ? Immutable.fromJS(getError(beginResponse)) : null)
           .set('fetchFlickrPending', !action.error);          // Set pending to inverse of error
     }
@@ -85,6 +87,9 @@ export function reducer(state, action) {
       return state
         .set('fetchFlickrPending', false)
         .set('fetchFlickrError', null)
+        .set('fetchFlickrTags', action.meta.searchTags)
+        .set('fetchFlickerFromIndex', action.meta.fromIndex)
+        // Note: Append the results here, not overwrite them
         .set('fetchFlickrResults', Immutable.fromJS(parsePhotos(action.payload)));
     }
     case FETCH_FLICKR_FAILURE: {

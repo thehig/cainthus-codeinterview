@@ -1,21 +1,35 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import { FlickrInfiniteScroller } from './index';
+
 class FlickrSearch extends PureComponent {
   static propTypes = {
     error: PropTypes.object,
     pending: PropTypes.bool.isRequired,
     fetchAction: PropTypes.func.isRequired,
+    fetchMoreAction: PropTypes.func.isRequired,
     dismissAction: PropTypes.func.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+
+    this.fetchMoreAction = this.fetchMoreAction.bind(this);
+  }
+
+  fetchMoreAction () {
+    console.log("FlickrSearch.jsx", "fetchMoreAction");
+    this.props.fetchMoreAction();
+  }
 
   render(){
     const {
         error,
         pending,
+        results,
         fetchAction,
         dismissAction,
-        results,
     } = this.props;
 
 
@@ -44,11 +58,7 @@ class FlickrSearch extends PureComponent {
                         <li>Total: {results.get('total')}</li>
                     </ul>
 
-                    <ul>
-                        { results.get('photos').map( 
-                            (p, index) => <img src={p.get('url')} key={index} alt={p.get('title')} />
-                        ) }
-                    </ul>
+                    <FlickrInfiniteScroller photos={results.get('photos')} fetchMoreAction={this.fetchMoreAction} />
                 </div>
             }
         </div>
