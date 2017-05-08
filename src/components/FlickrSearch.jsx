@@ -19,7 +19,7 @@ class FlickrSearch extends PureComponent {
     } = this.props;
 
     const hasError = !!error;
-    const errorMsg = hasError ? error.error : "";
+    const errorMsg = hasError ? error.get('error') : "";
 
     return (
         <div>

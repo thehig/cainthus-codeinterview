@@ -1,3 +1,4 @@
+import Immutable from 'immutable';
 import { CALL_API } from 'redux-api-middleware';
 import { getError } from './common/utils';
 
@@ -57,20 +58,20 @@ export function reducer(state, action) {
     case FETCH_FLICKR_BEGIN: {
       const beginResponse = action.error ? getError(action) : (action.payload || {});       // If error is true, then payload is a RequestError
       return state
-          .set('fetchFlickrError', action.error ? getError(beginResponse) : null)
+          .set('fetchFlickrError', action.error ? Immutable.fromJS(getError(beginResponse)) : null)
           .set('fetchFlickrPending', !action.error);          // Set pending to inverse of error
     }
     case FETCH_FLICKR_SUCCESS: {
       return state
         .set('fetchFlickrPending', false)
         .set('fetchFlickrError', null)
-        .set('flickrResults', action.payload);
+        .set('flickrResults', Immutable.fromJS(action.payload));
     }
     case FETCH_FLICKR_FAILURE: {
       const failResponse = getError(action);
       return state
         .set('fetchFlickrPending', false)
-        .set('fetchFlickrError', failResponse);
+        .set('fetchFlickrError', Immutable.fromJS(failResponse));
     }
     case FETCH_FLICKR_DISMISS_ERROR:
       return state.set('fetchFlickrError', null);
