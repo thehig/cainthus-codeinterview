@@ -50,7 +50,8 @@ export function dismissFetchFlickrError() {
   };
 }
 
-function parsePhotos (flickrApiResponse) {
+function parsePhotos (state, action) {
+  const flickrApiResponse = action.payload;
   const { page, pages, perpage, total, photo } = flickrApiResponse.photos;
 
   const photos = photo.map(function(p){
@@ -62,12 +63,18 @@ function parsePhotos (flickrApiResponse) {
   });
 
   const results = {
-    page,
+    page, // changes
     pages,
     perpage,
     total,
-    photos,
+    photos, // changes
   };
+
+  if(page > 1) {
+    const previousPhotos = state.get('fetchFlickrResults').get('photos').toJS();
+    // console.log("Previous Photos", previousPhotos);
+    results.photos = (previousPhotos || []).concat(photos);
+  }
 
   // console.log("parsePhotos results", results);
   return results;
@@ -90,7 +97,7 @@ export function reducer(state, action) {
         .set('fetchFlickrTags', action.meta.searchTags)
         .set('fetchFlickerFromIndex', action.meta.fromIndex)
         // Note: Append the results here, not overwrite them
-        .set('fetchFlickrResults', Immutable.fromJS(parsePhotos(action.payload)));
+        .set('fetchFlickrResults', Immutable.fromJS(parsePhotos(state, action)));
     }
     case FETCH_FLICKR_FAILURE: {
       const failResponse = getError(action);
