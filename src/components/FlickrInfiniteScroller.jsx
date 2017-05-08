@@ -7,6 +7,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 class FlickrInfiniteScroller extends PureComponent {
   static propTypes = {
+    hasMore: PropTypes.bool.isRequired,
     photos: ImmutablePropTypes.list.isRequired,
     fetchMoreAction: PropTypes.func.isRequired,
   };
@@ -18,13 +19,13 @@ class FlickrInfiniteScroller extends PureComponent {
   }
 
   loadMore(...args){
-    console.log("LOAD MORE");
     this.props.fetchMoreAction();
   }
 
   render(){
     const {
       photos,
+      hasMore
     } = this.props;
 
     return (
@@ -33,12 +34,12 @@ class FlickrInfiniteScroller extends PureComponent {
         <InfiniteScroll
             pageStart={0}
             loadMore={this.loadMore}
-            hasMore={true}
+            hasMore={hasMore}
             loader={<div className="loader">Loading ...</div>}
         >
-            <ul>
-              { photos.map((p, index) => <li key={index} ><img className="fixed-height-search-result" src={p.get('url')} alt={p.get('title')} /></li> ) }
-            </ul>
+          <ul>
+            { photos.map((p, index) => <li key={index} ><img className="fixed-height-search-result" src={p.get('url')} alt={p.get('title')} /></li> ) }
+          </ul>
         </InfiniteScroll>
       </div>
     );

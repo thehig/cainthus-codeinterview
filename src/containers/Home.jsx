@@ -34,7 +34,7 @@ class Home extends Component {
     const tags = this.props.data.get('fetchFlickrTags');
     const fromIndex = this.props.data.get('fetchFlickerFromIndex');
 
-    console.log("Fetching", tags, fromIndex);
+    // console.log("Fetching", tags, fromIndex);
     return this.props.actions.fetchFlickr(tags, fromIndex + 1);
   }
 

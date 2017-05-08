@@ -19,7 +19,7 @@ class FlickrSearch extends PureComponent {
   }
 
   fetchMoreAction () {
-    console.log("FlickrSearch.jsx", "fetchMoreAction");
+    // console.log("FlickrSearch.jsx", "fetchMoreAction");
     this.props.fetchMoreAction();
   }
 
@@ -58,7 +58,11 @@ class FlickrSearch extends PureComponent {
                         <li>Total: {results.get('total')}</li>
                     </ul>
 
-                    <FlickrInfiniteScroller photos={results.get('photos')} fetchMoreAction={this.fetchMoreAction} />
+                    <FlickrInfiniteScroller 
+                            photos={results.get('photos')} 
+                            fetchMoreAction={this.fetchMoreAction} 
+                            hasMore={results.get('page') < results.get('pages')}
+                    />
                 </div>
             }
         </div>
