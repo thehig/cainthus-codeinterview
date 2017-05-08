@@ -8,7 +8,7 @@ import * as actions from '../redux/common/actions';
 
 class Home extends Component {
   static propTypes = {
-    // accessibleState: PropTypes.object.isRequired,
+    counter: PropTypes.number.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
@@ -23,10 +23,11 @@ class Home extends Component {
   };
 
   render() {
+    const { counter } = this.props;
     return (
       <div>
         <h1>Home</h1>
-        <button onClick={this.clickButton}>Click</button>
+        <button onClick={this.clickButton}>Click ({counter})</button>
       </div>
     );
   };
@@ -35,7 +36,7 @@ class Home extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    // accessibleState: state.someSubset
+    counter: state.data.counter
   };
 }
 
