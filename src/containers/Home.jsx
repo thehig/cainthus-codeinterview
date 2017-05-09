@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { formValueSelector } from 'redux-form';
+
 import PropTypes from 'prop-types';
 import * as actions from '../redux/common/actions';
 import { FlickrSearch } from '../components/index';
@@ -11,6 +13,7 @@ class Home extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    searchFormValue: PropTypes.string,
   };
 
   constructor(props){
@@ -26,8 +29,10 @@ class Home extends Component {
     return this.props.actions.sampleAction();
   };
 
-  fetchFlickr(){
-    return this.props.actions.fetchFlickr("Bananas");
+  fetchFlickr(evt){
+    evt.preventDefault();
+    const { searchFormValue } = this.props;
+    return this.props.actions.fetchFlickr(searchFormValue);
   };
 
   fetchMoreFlickr(){    
@@ -57,7 +62,7 @@ class Home extends Component {
           error={fetchFlickrError}
           pending={fetchFlickrPending}
           results={fetchFlickrResults}
-          fetchAction={this.fetchFlickr}
+          handleSearchSubmit={this.fetchFlickr}
           fetchMoreAction={this.fetchMoreFlickr}
           dismissAction={this.dismissFetchFlickError}
         />
@@ -66,10 +71,13 @@ class Home extends Component {
   };
 };
 
+const selector = formValueSelector('flickrSearch');
+
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    data: state.data
+    data: state.data,
+    searchFormValue: selector(state, 'search'),
   };
 }
 

@@ -1,35 +1,27 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { FlickrInfiniteScroller } from './index';
+import { FlickrInfiniteScroller, SearchForm } from './index';
 
 class FlickrSearch extends PureComponent {
   static propTypes = {
     error: PropTypes.object,
     pending: PropTypes.bool.isRequired,
-    fetchAction: PropTypes.func.isRequired,
+    handleSearchSubmit: PropTypes.func.isRequired,
     fetchMoreAction: PropTypes.func.isRequired,
     dismissAction: PropTypes.func.isRequired,
+    results: ImmutablePropTypes.map,
   };
-
-  constructor(props) {
-    super(props);
-
-    this.fetchMoreAction = this.fetchMoreAction.bind(this);
-  }
-
-  fetchMoreAction () {
-    // console.log("FlickrSearch.jsx", "fetchMoreAction");
-    this.props.fetchMoreAction();
-  }
 
   render(){
     const {
         error,
         pending,
         results,
-        fetchAction,
+        handleSearchSubmit,
         dismissAction,
+        fetchMoreAction,
     } = this.props;
 
 
@@ -38,8 +30,7 @@ class FlickrSearch extends PureComponent {
 
     return (
         <div>
-            FlickrSearch
-            <button onClick={fetchAction} >{ pending ? "Pending" : "Fetch" }</button>
+            <SearchForm pending={pending} handleSubmit={handleSearchSubmit} />
 
             { hasError &&
                 <div>
@@ -60,7 +51,7 @@ class FlickrSearch extends PureComponent {
 
                     <FlickrInfiniteScroller 
                             photos={results.get('photos')} 
-                            fetchMoreAction={this.fetchMoreAction} 
+                            fetchMoreAction={fetchMoreAction} 
                             hasMore={results.get('page') < results.get('pages')}
                     />
                 </div>
