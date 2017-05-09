@@ -15,7 +15,7 @@ const endpointUrl = `${flickr.endpoint}/?method=flickr.photos.search&api_key=${f
 export function fetchFlickr(searchTags, fromIndex = 1) {
   return {
     [CALL_API]: {
-      endpoint: endpointUrl + searchTags + "&page=" + fromIndex,
+      endpoint: endpointUrl + encodeURIComponent(searchTags) + "&page=" + fromIndex,
       method: 'GET',
       types: [
         {
