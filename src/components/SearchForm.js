@@ -12,12 +12,12 @@ class SearchForm extends PureComponent {
   render(){
     const { handleSubmit } = this.props;
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form-group">
         <div>
-          <label htmlFor="search">search</label>
-          <Field name="search" component="input" type="search"/>
+          <label htmlFor="search">Search:</label>
+          <Field name="search" component="input" type="search" className="form-control"/>
         </div>
-        <button type="submit">Search</button>
+        <button type="submit" className="form-control">Search</button>
       </form>
     );
   };

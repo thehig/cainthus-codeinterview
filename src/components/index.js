@@ -4,6 +4,7 @@ import NotFound from './NotFound';
 import FlickrSearch from './FlickrSearch';
 import FlickrInfiniteScroller from './FlickrInfiniteScroller';
 import SearchForm from './SearchForm';
+import FlickrTile from './FlickrTile';
 
 export {
   About,
@@ -12,4 +13,5 @@ export {
   FlickrSearch,
   FlickrInfiniteScroller,
   SearchForm,
+  FlickrTile,
 };

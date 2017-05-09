@@ -12,8 +12,8 @@ const App = () => (
   <Provider store={store}>
     { /* ConnectedRouter will use the store from Provider automatically */ }
     <ConnectedRouter history={history}>
-      <div>
-        <Links />
+      <div className="container">
+        {/*<Links />*/}
         <Routes />
       </div>
     </ConnectedRouter>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import InfiniteScroll from 'react-infinite-scroller';
+import { FlickrTile } from './index';
 
 
 class FlickrInfiniteScroller extends PureComponent {
@@ -37,9 +38,7 @@ class FlickrInfiniteScroller extends PureComponent {
             hasMore={hasMore}
             loader={<div className="loader">Loading ...</div>}
         >
-          <ul>
-            { photos.map((p, index) => <li key={index} ><img className="fixed-height-search-result" src={p.get('url')} alt={p.get('title')} /></li> ) }
-          </ul>
+          { photos.map((p, index) => <FlickrTile photo={p}/>) }
         </InfiniteScroll>
       </div>
     );

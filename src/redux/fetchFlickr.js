@@ -55,11 +55,8 @@ function parsePhotos (state, action) {
   const { page, pages, perpage, total, photo } = flickrApiResponse.photos;
 
   const photos = photo.map(function(p){
-    return {
-      url: `https://farm${p.farm}.staticflickr.com/${p.server}/${p.id}_${p.secret}.jpg`,
-      title: p.title,
-      owner: p.owner,
-    };
+    p.url = `https://farm${p.farm}.staticflickr.com/${p.server}/${p.id}_${p.secret}.jpg`;
+    return p;
   });
 
   const results = {
@@ -72,7 +69,6 @@ function parsePhotos (state, action) {
 
   if(page > 1) {
     const previousPhotos = state.get('fetchFlickrResults').get('photos').toJS();
-    // console.log("Previous Photos", previousPhotos);
     results.photos = (previousPhotos || []).concat(photos);
   }
 

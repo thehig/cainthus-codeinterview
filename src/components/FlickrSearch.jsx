@@ -40,21 +40,11 @@ class FlickrSearch extends PureComponent {
             }
 
             { results && 
-                <div>
-                    Results:
-                    <ul>
-                        <li>Page: {results.get('page')}</li>
-                        <li>Pages: {results.get('pages')}</li>
-                        <li>Per Page: {results.get('perpage')}</li>
-                        <li>Total: {results.get('total')}</li>
-                    </ul>
-
-                    <FlickrInfiniteScroller 
-                            photos={results.get('photos')} 
-                            fetchMoreAction={fetchMoreAction} 
-                            hasMore={results.get('page') < results.get('pages')}
-                    />
-                </div>
+                <FlickrInfiniteScroller 
+                    photos={results.get('photos')} 
+                    fetchMoreAction={fetchMoreAction} 
+                    hasMore={results.get('page') < results.get('pages')}
+                />
             }
         </div>
     );
