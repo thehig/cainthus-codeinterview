@@ -19,15 +19,15 @@ class Home extends Component {
   constructor(props){
     super(props);
 
-    this.clickButton = this.clickButton.bind(this);
+    // this.clickButton = this.clickButton.bind(this);
     this.fetchFlickr = this.fetchFlickr.bind(this);
     this.fetchMoreFlickr = this.fetchMoreFlickr.bind(this);
     this.dismissFetchFlickError = this.dismissFetchFlickError.bind(this);
   };
 
-  clickButton(){
-    return this.props.actions.sampleAction();
-  };
+  // clickButton(){
+  //   return this.props.actions.sampleAction();
+  // };
 
   fetchFlickr(evt){
     evt.preventDefault();
@@ -48,7 +48,7 @@ class Home extends Component {
   };
 
   render() {
-    const counter = this.props.data.get('counter');
+    // const counter = this.props.data.get('counter');
     const fetchFlickrError = this.props.data.get('fetchFlickrError');
     const fetchFlickrPending = this.props.data.get('fetchFlickrPending');
     const fetchFlickrResults = this.props.data.get('fetchFlickrResults');
@@ -56,7 +56,7 @@ class Home extends Component {
     return (
       <div>
         <h1>Home</h1>
-        <button onClick={this.clickButton}>Click ({counter})</button>
+        {/* <button onClick={this.clickButton}>Click ({counter})</button> */}
 
         <FlickrSearch
           error={fetchFlickrError}
@@ -71,13 +71,13 @@ class Home extends Component {
   };
 };
 
-const selector = formValueSelector('flickrSearch');
+const flickrSearchSelector = formValueSelector('flickrSearch');
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     data: state.data,
-    searchFormValue: selector(state, 'search'),
+    searchFormValue: flickrSearchSelector(state, 'search'),
   };
 }
 
