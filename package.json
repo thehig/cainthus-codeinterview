@@ -23,6 +23,7 @@
     "react-router-redux": "next",
     "redux": "^3.6.0",
     "redux-api-middleware": "^1.0.3",
+    "redux-form": "^6.6.3",
     "redux-logger": "^3.0.1"
   },
   "devDependencies": {

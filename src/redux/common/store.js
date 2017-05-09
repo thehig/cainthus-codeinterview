@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import createHistory from 'history/createBrowserHistory';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
+import { reducer as formReducer } from 'redux-form'
 
 import { createLogger } from 'redux-logger';
 import { apiMiddleware } from 'redux-api-middleware';
@@ -18,7 +19,8 @@ const middlewares = [
 
 const masterReducer = combineReducers({
     data: reducer,
-    router: routerReducer
+    router: routerReducer,
+    form: formReducer,
 });
 
 // if (process.env.NODE_ENV === 'dev') {
